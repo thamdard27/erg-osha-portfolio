@@ -4,78 +4,366 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tabasum Hamdard — Occupational Safety & Health Data Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#222;--muted:#555;--accent:#1F4E79;--line:#e4e8ee;--bg:#fff;--soft:#f6f8fb;}
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.6;background:var(--bg);}
-  header{border-bottom:1px solid var(--line);padding:14px 6vw;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);z-index:10;}
-  nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
-  nav .name{font-weight:700;color:var(--accent);letter-spacing:.3px;}
-  nav a{color:var(--muted);text-decoration:none;margin-left:16px;font-size:14px;}
-  nav a:hover{color:var(--accent);}
-  .hero{padding:66px 6vw 46px;max-width:900px;}
-  .hero h1{font-size:32px;color:var(--accent);line-height:1.2;}
-  .hero .tag{font-size:18px;color:var(--muted);margin-top:14px;}
-  .hero .links{margin-top:20px;font-size:14px;}
-  .hero .links a{color:var(--accent);text-decoration:none;margin-right:16px;}
-  section{padding:44px 6vw;max-width:960px;border-top:1px solid var(--line);}
-  h2{color:var(--accent);font-size:22px;margin-bottom:16px;}
-  h3{font-size:16px;margin:22px 0 6px;}
-  p{margin-bottom:14px;}
-  .muted{color:var(--muted);font-size:14px;}
-  .stat-grid{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0;}
-  .stat{flex:1 1 180px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:18px;}
-  .stat .n{font-size:26px;font-weight:700;color:var(--accent);}
-  .stat .l{font-size:13px;color:var(--muted);margin-top:4px;}
-  .card{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:20px;margin:16px 0;}
-  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;}
-  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
-  th{color:var(--accent);font-weight:600;}
-  .bar{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:14px;}
-  .bar .label{width:230px;flex-shrink:0;}
-  .bar .track{flex:1;background:#eef2f7;border-radius:4px;height:20px;position:relative;}
-  .bar .fill{background:var(--accent);height:100%;border-radius:4px;}
-  .bar .val{width:64px;text-align:right;color:var(--muted);}
-  .src{font-size:13px;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;margin-top:12px;}
-  .src a{color:var(--accent);}
-  .tool-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
-  .tool-tag{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:5px 12px;font-size:13px;color:var(--accent);}
-  footer{padding:34px 6vw;border-top:1px solid var(--line);color:var(--muted);font-size:13px;}
+/* ── Tokens ─────────────────────────────────────────── */
+:root {
+  --navy:   #0D1F35;
+  --navy2:  #132840;
+  --teal:   #1A7F8E;
+  --teal2:  #22A2B4;
+  --gold:   #E8A84C;
+  --ink:    #1A1A2E;
+  --mid:    #4A5568;
+  --soft:   #F7F9FC;
+  --line:   #E2E8F0;
+  --white:  #FFFFFF;
+  --r:      10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.7;
+}
+
+/* ── Nav ────────────────────────────────────────────── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,31,53,.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+nav {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 58px;
+}
+.nav-name {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 15px; color: var(--white); letter-spacing: .4px;
+}
+.nav-name span { color: var(--teal2); }
+.nav-links { display: flex; gap: 6px; }
+.nav-links a {
+  color: rgba(255,255,255,.6); text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  padding: 5px 12px; border-radius: 6px;
+  transition: color .2s, background .2s;
+}
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,.08); }
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #0A2E44 60%, #0D3348 100%);
+  padding: 90px 32px 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(26,127,142,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 800px; margin: 0 auto; position: relative; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(26,127,142,.2); border: 1px solid rgba(34,162,180,.3);
+  color: var(--teal2); font-size: 11px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--teal2);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:.4; transform:scale(.7); }
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(30px, 5vw, 52px);
+  color: var(--white); line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero h1 em { color: var(--teal2); font-style: normal; }
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,.65);
+  max-width: 620px; margin-bottom: 32px; line-height: 1.65;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  text-decoration: none; font-size: 13px; font-weight: 600;
+  padding: 10px 20px; border-radius: 8px; transition: all .2s;
+}
+.btn-primary {
+  background: var(--teal); color: var(--white);
+  border: 1px solid var(--teal);
+}
+.btn-primary:hover { background: var(--teal2); border-color: var(--teal2); transform: translateY(-1px); }
+.btn-ghost {
+  background: rgba(255,255,255,.08); color: rgba(255,255,255,.8);
+  border: 1px solid rgba(255,255,255,.15);
+}
+.btn-ghost:hover { background: rgba(255,255,255,.14); color: var(--white); transform: translateY(-1px); }
+
+/* ── KPI strip ──────────────────────────────────────── */
+.kpi-strip {
+  background: var(--navy2);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.kpi-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; flex-wrap: wrap;
+  padding: 0 32px;
+}
+.kpi {
+  flex: 1 1 200px; padding: 28px 24px;
+  border-right: 1px solid rgba(255,255,255,.07);
+  position: relative;
+}
+.kpi:last-child { border-right: none; }
+.kpi-n {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 36px; color: var(--teal2); line-height: 1;
+}
+.kpi-label { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 6px; line-height: 1.45; }
+.kpi-delta {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; margin-top: 8px;
+  color: #5DD98A; background: rgba(93,217,138,.12);
+  padding: 2px 8px; border-radius: 20px;
+}
+
+/* ── Sections ───────────────────────────────────────── */
+.section {
+  max-width: 960px; margin: 0 auto;
+  padding: 64px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.section:last-of-type { border-bottom: none; }
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 10px;
+}
+.section h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 26px; color: var(--navy); margin-bottom: 18px;
+}
+p { margin-bottom: 16px; color: var(--mid); font-size: 15px; }
+p:last-child { margin-bottom: 0; }
+
+/* ── Cards ──────────────────────────────────────────── */
+.cards { display: grid; gap: 16px; margin-top: 24px; }
+.card {
+  background: var(--soft); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 24px 28px;
+  border-left: 4px solid var(--teal);
+}
+.card h3 {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 15px; color: var(--navy); margin-bottom: 14px;
+}
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--teal); font-weight: 600; font-size: 13px; white-space: nowrap; }
+td { color: var(--mid); }
+.rationale {
+  margin-top: 14px; font-size: 14px; color: var(--mid);
+  background: rgba(26,127,142,.06); border-left: 3px solid var(--teal);
+  padding: 10px 14px; border-radius: 0 6px 6px 0;
+}
+
+/* ── Method grid ────────────────────────────────────── */
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; margin-top: 24px; }
+.method-item {
+  background: var(--soft); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 20px;
+}
+.method-icon { font-size: 24px; margin-bottom: 10px; }
+.method-item h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+.method-item p { font-size: 13px; color: var(--mid); margin: 0; }
+
+/* ── Chart ──────────────────────────────────────────── */
+.chart-wrap {
+  background: var(--navy);
+  border-radius: 14px; padding: 36px 32px;
+  margin: 28px 0;
+}
+.chart-title {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 15px; color: var(--white); margin-bottom: 6px;
+}
+.chart-sub { font-size: 12px; color: rgba(255,255,255,.45); margin-bottom: 28px; }
+
+.ch-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 56px;
+  align-items: center; gap: 14px;
+  margin-bottom: 14px;
+}
+.ch-label { font-size: 13px; color: rgba(255,255,255,.75); text-align: right; }
+.ch-track {
+  height: 28px; background: rgba(255,255,255,.07);
+  border-radius: 6px; overflow: hidden; position: relative;
+}
+.ch-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--teal2) 100%);
+  width: 0;
+  transition: width 1.2s cubic-bezier(.22,1,.36,1);
+}
+.ch-fill.gold {
+  background: linear-gradient(90deg, #C8842A 0%, var(--gold) 100%);
+}
+.ch-val { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); }
+.ch-pct {
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px; color: rgba(255,255,255,.4); font-weight: 500;
+}
+
+/* ── OSHA call-out ──────────────────────────────────── */
+.osha-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; margin: 24px 0; }
+.osha-card {
+  background: var(--soft); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 20px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.osha-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--navy); }
+.osha-event { font-size: 13px; color: var(--mid); line-height: 1.4; }
+.osha-rank {
+  font-size: 11px; font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; color: var(--teal); margin-top: 4px;
+}
+
+/* ── Tools ──────────────────────────────────────────── */
+.tool-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.tool-tag {
+  background: var(--soft); border: 1px solid var(--line);
+  border-radius: 6px; padding: 5px 13px;
+  font-size: 13px; color: var(--navy); font-weight: 500;
+}
+
+/* ── Source cite ────────────────────────────────────── */
+.src {
+  font-size: 12px; color: var(--mid);
+  border-left: 3px solid var(--teal); padding-left: 10px;
+  margin-top: 16px; line-height: 1.5;
+}
+.src a { color: var(--teal); }
+
+/* ── Contact ────────────────────────────────────────── */
+.contact-band {
+  background: var(--navy);
+  padding: 56px 32px; text-align: center;
+}
+.contact-band h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 26px; color: var(--white); margin-bottom: 12px;
+}
+.contact-band p { color: rgba(255,255,255,.55); font-size: 15px; }
+.contact-band a { color: var(--teal2); text-decoration: none; }
+.contact-actions { display: flex; justify-content: center; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+
+/* ── Footer ─────────────────────────────────────────── */
+footer {
+  background: var(--navy2); border-top: 1px solid rgba(255,255,255,.06);
+  padding: 24px 32px; text-align: center;
+  font-size: 12px; color: rgba(255,255,255,.3);
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 680px) {
+  nav { padding: 0 18px; }
+  .nav-links { display: none; }
+  .hero { padding: 60px 20px 50px; }
+  .section { padding: 44px 20px; }
+  .ch-row { grid-template-columns: 130px 1fr 48px; }
+  .ch-label { font-size: 12px; }
+  .kpi-inner { flex-direction: column; }
+  .kpi { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); padding: 20px; }
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <header>
   <nav>
-    <span class="name">Tabasum Hamdard</span>
-    <span>
+    <span class="nav-name">Tabasum <span>Hamdard</span></span>
+    <div class="nav-links">
       <a href="#about">About</a>
       <a href="#method">Methodology</a>
-      <a href="#cases">Case Classification</a>
-      <a href="#analysis">Data Analysis</a>
+      <a href="#cases">Cases</a>
+      <a href="#analysis">Analysis</a>
       <a href="#approach">Approach</a>
       <a href="#contact">Contact</a>
-    </span>
+    </div>
   </nav>
 </header>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Occupational Safety &amp; Health Data Analysis</h1>
-  <p class="tag">Disciplined classification, clear documentation, and analysis of workplace injury and illness data using the BLS Occupational Injury and Illness Classification System (OIICS).</p>
-  <div class="links">
-    <a href="mailto:tabassum.hamdard11@gmail.com">Email</a>
-    <a href="https://github.com/thamdard27">GitHub</a>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">OIICS v3.0 · BLS · OSHA</div>
+    <h1>Occupational Safety<br>&amp; Health <em>Data Analysis</em></h1>
+    <p class="hero-sub">Disciplined case classification, clear incident documentation, and workplace injury and illness analysis using the BLS Occupational Injury and Illness Classification System.</p>
+    <div class="hero-actions">
+      <a href="mailto:tabassum.hamdard11@gmail.com" class="btn btn-primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        Get in touch
+      </a>
+      <a href="https://github.com/thamdard27" class="btn btn-ghost" target="_blank">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
   </div>
-  <p class="muted" style="margin-top:18px;">This portfolio uses publicly available data from the U.S. Bureau of Labor Statistics (BLS) and the Occupational Safety and Health Administration (OSHA), together with the public BLS OIICS v3.0 manual, to document my classification methodology and analytical approach. Every figure is drawn directly from the cited public sources.</p>
 </div>
 
-<section id="about">
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-inner">
+    <div class="kpi">
+      <div class="kpi-n">5,070</div>
+      <div class="kpi-label">Fatal work injuries, 2024</div>
+      <div class="kpi-delta">▼ 4.0% from 2023</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-n">2.5M</div>
+      <div class="kpi-label">Nonfatal injuries &amp; illnesses, private industry</div>
+      <div class="kpi-delta">▼ 3.1% from 2023</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-n">3.3</div>
+      <div class="kpi-label">Fatal injuries per 100,000 FTE workers</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-n">104K</div>
+      <div class="kpi-label">Severe injury reports to OSHA, 2015–2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="about">
+  <div class="section-label">Background</div>
   <h2>About</h2>
-  <p>I am a data analyst who does careful, detail-driven work well, the kind where accuracy is the whole point and consistency cannot slip. I hold a Master's in Data Science and a Certificate in Applied Statistics from Michigan Technological University, and across every role I have held, one strength has stayed constant: turning messy, inconsistent information into clean, structured, and reliable data others can trust.</p>
-  <p>That began early. At seventeen, my first role was converting paper medical records into digital health records, patient details, physician notes, prescriptions, where consistency and confidentiality were not optional. Later, in a graduate internship, I analyzed animal-health and disease data, digitized handwritten records, and classified ambiguous cases consistently while keeping pace with deadlines. I work well independently in remote settings, I hold a high standard for accuracy, and I would rather verify a detail than pass along one I am unsure of.</p>
+  <p>I am a data analyst who does careful, detail-driven work well — the kind where accuracy is the whole point and consistency cannot slip. I hold a Master's in Data Science and a Certificate in Applied Statistics from Michigan Technological University, and across every role I have held, one strength has stayed constant: turning messy, inconsistent information into clean, structured, and reliable data others can trust.</p>
+  <p>That began early. At seventeen, my first role was converting paper medical records into digital health records — patient details, physician notes, prescriptions — where consistency and confidentiality were not optional. Later, in a graduate internship, I analyzed animal-health and disease data, digitized handwritten records, and classified ambiguous cases consistently while keeping pace with deadlines. I work well independently in remote settings, I hold a high standard for accuracy, and I would rather verify a detail than pass along one I am unsure of.</p>
   <p>ERG's occupational safety and health work is where I can put that strength to direct use. Supporting OSHA's effort to understand injury and illness trends calls for exactly the disciplined classification and clear documentation I do best, and contributing to research that improves worker safety is work I would take seriously every day.</p>
 
-  <h3>Tools &amp; Software</h3>
+  <div class="section-label" style="margin-top:32px;">Tools &amp; Software</div>
   <div class="tool-row">
     <span class="tool-tag">Microsoft Excel</span>
     <span class="tool-tag">Microsoft Access</span>
@@ -88,108 +376,211 @@
     <span class="tool-tag">Qlik Sense</span>
     <span class="tool-tag">Power BI</span>
   </div>
-</section>
+</div>
 
-<section id="method">
+<!-- METHODOLOGY -->
+<div class="section" id="method">
+  <div class="section-label">Framework</div>
   <h2>Classification Methodology</h2>
   <p>OIICS version 3.0 classifies each case across four structures. My process is to read the record fully, identify the injuring event before the outcome, code each structure in order, and document the rationale so the result is consistent and reviewable.</p>
-  <table>
-    <tr><th style="width:26%;">Nature</th><td>The physical characteristic of the injury or illness (for example, fracture, amputation).</td></tr>
-    <tr><th>Part of body</th><td>The body part directly affected.</td></tr>
-    <tr><th>Event or exposure</th><td>The manner in which the injury or illness was produced.</td></tr>
-    <tr><th>Source &amp; secondary source</th><td>The object, substance, or exposure that directly produced or contributed to the injury.</td></tr>
-  </table>
-  <p class="src">Framework: U.S. Bureau of Labor Statistics, Occupational Injury and Illness Classification System (OIICS) manual, version 3.0, implemented for 2023 data forward. <a href="https://www.bls.gov/iif/definitions/occupational-injuries-and-illnesses-classification-manual.htm">bls.gov/iif/definitions</a></p>
-</section>
+  <div class="method-grid">
+    <div class="method-item">
+      <div class="method-icon">🩹</div>
+      <h4>Nature</h4>
+      <p>The physical characteristic of the injury or illness — for example, fracture, amputation, or burn.</p>
+    </div>
+    <div class="method-item">
+      <div class="method-icon">🦴</div>
+      <h4>Part of Body</h4>
+      <p>The specific body part directly affected by the injury or illness.</p>
+    </div>
+    <div class="method-item">
+      <div class="method-icon">⚡</div>
+      <h4>Event or Exposure</h4>
+      <p>The manner in which the injury or illness was produced — the primary axis of OIICS analysis.</p>
+    </div>
+    <div class="method-item">
+      <div class="method-icon">🔧</div>
+      <h4>Source &amp; Secondary Source</h4>
+      <p>The object, substance, or condition that directly produced or contributed to the injury.</p>
+    </div>
+  </div>
+  <p class="src" style="margin-top:20px;">Framework: U.S. Bureau of Labor Statistics, OIICS manual v3.0, implemented for 2023 data forward. <a href="https://www.bls.gov/iif/definitions/occupational-injuries-and-illnesses-classification-manual.htm">bls.gov/iif/definitions</a></p>
+</div>
 
-<section id="cases">
+<!-- CASE CLASSIFICATION -->
+<div class="section" id="cases">
+  <div class="section-label">Applied Coding</div>
   <h2>Case Classification Samples</h2>
-  <p class="muted">Each case applies OIICS event-or-exposure coding to a documented incident type. The event categories and codes are drawn from the BLS OIICS structure as published in the CFOI 2024 results (Table A-9).</p>
+  <p>Each case applies OIICS event-or-exposure coding to a documented incident type. Codes are drawn from the BLS OIICS structure as published in the CFOI 2024 results (Table A-9).</p>
 
-  <div class="card">
-    <h3>Case 1 — Struck by falling object</h3>
-    <p><em>Incident narrative:</em> A worker on a goods-producing site was struck by an object that fell from above during handling, resulting in a fatal injury.</p>
-    <table>
-      <tr><th>Event or exposure</th><td>Struck by falling object</td></tr>
-      <tr><th>OIICS event code</th><td>643</td></tr>
-      <tr><th>Parent category</th><td>Contact incidents (6) &rarr; Struck by propelled, falling, or suspended object (64)</td></tr>
-    </table>
-    <p><em>Rationale:</em> The injuring event is the falling object making contact, so it codes to 643 under the Contact incidents structure, not to a fall by the worker.</p>
-    <p class="src">Code and category: BLS CFOI 2024, Table A-9. <a href="https://www.bls.gov/iif/fatal-injuries-tables/fatal-occupational-injuries-table-a-9-2024.htm">Table A-9, 2024</a></p>
+  <div class="cards">
+    <div class="card">
+      <h3>Case 1 — Struck by falling object</h3>
+      <p style="margin-bottom:12px;font-size:14px;"><em>Incident narrative:</em> A worker on a goods-producing site was struck by an object that fell from above during handling, resulting in a fatal injury.</p>
+      <table>
+        <tr><th>Event or exposure</th><td>Struck by falling object</td></tr>
+        <tr><th>OIICS event code</th><td>643</td></tr>
+        <tr><th>Parent category</th><td>Contact incidents (6) → Struck by propelled, falling, or suspended object (64)</td></tr>
+      </table>
+      <div class="rationale">The injuring event is the falling object making contact, so it codes to 643 under Contact incidents — not to a fall by the worker.</div>
+      <p class="src">BLS CFOI 2024, Table A-9. <a href="https://www.bls.gov/iif/fatal-injuries-tables/fatal-occupational-injuries-table-a-9-2024.htm">Table A-9, 2024</a></p>
+    </div>
+
+    <div class="card">
+      <h3>Case 2 — Caught by running powered equipment</h3>
+      <p style="margin-bottom:12px;font-size:14px;"><em>Incident narrative:</em> A maintenance worker was cleaning powered equipment that had not been fully de-energized; the worker was caught by a moving part.</p>
+      <table>
+        <tr><th>Event or exposure</th><td>Struck by running powered equipment during maintenance, cleaning, testing</td></tr>
+        <tr><th>OIICS event code</th><td>652</td></tr>
+        <tr><th>Parent category</th><td>Contact incidents (6) → Struck, caught, or compressed by running powered equipment (65)</td></tr>
+      </table>
+      <div class="rationale">The maintenance/cleaning context is captured by subcode 652 within the running-powered-equipment family — specificity matters here.</div>
+      <p class="src">BLS CFOI 2024, Table A-9. <a href="https://www.bls.gov/iif/fatal-injuries-tables/fatal-occupational-injuries-table-a-9-2024.htm">Table A-9, 2024</a></p>
+    </div>
+
+    <div class="card">
+      <h3>Case 3 — Roadway collision, oncoming</h3>
+      <p style="margin-bottom:12px;font-size:14px;"><em>Incident narrative:</em> A driver was fatally injured in a roadway collision with another vehicle while moving in opposite directions.</p>
+      <table>
+        <tr><th>Event or exposure</th><td>Roadway collision with other vehicle(s), moving in opposite directions, oncoming</td></tr>
+        <tr><th>OIICS event code</th><td>2613</td></tr>
+        <tr><th>Parent category</th><td>Transportation incidents (2) → Roadway incidents (26) → Collision with other vehicle(s) (261)</td></tr>
+      </table>
+      <div class="rationale">Coded to the most specific level the record supports — the oncoming-direction detail selects subcode 2613 rather than the parent 261.</div>
+      <p class="src">BLS CFOI 2024, Table A-9. <a href="https://www.bls.gov/iif/fatal-injuries-tables/fatal-occupational-injuries-table-a-9-2024.htm">Table A-9, 2024</a></p>
+    </div>
   </div>
+</div>
 
-  <div class="card">
-    <h3>Case 2 — Caught by running powered equipment</h3>
-    <p><em>Incident narrative:</em> A maintenance worker was cleaning powered equipment that had not been fully de-energized; the worker was caught by a moving part.</p>
-    <table>
-      <tr><th>Event or exposure</th><td>Struck by running powered equipment during maintenance, cleaning, testing</td></tr>
-      <tr><th>OIICS event code</th><td>652</td></tr>
-      <tr><th>Parent category</th><td>Contact incidents (6) &rarr; Struck, caught, or compressed by running powered equipment (65)</td></tr>
-    </table>
-    <p><em>Rationale:</em> The maintenance/cleaning context is captured by the specific subcode 652 within the running-powered-equipment family.</p>
-    <p class="src">Code and category: BLS CFOI 2024, Table A-9. <a href="https://www.bls.gov/iif/fatal-injuries-tables/fatal-occupational-injuries-table-a-9-2024.htm">Table A-9, 2024</a></p>
-  </div>
-
-  <div class="card">
-    <h3>Case 3 — Roadway collision, oncoming</h3>
-    <p><em>Incident narrative:</em> A driver was fatally injured in a roadway collision with another vehicle while moving in opposite directions.</p>
-    <table>
-      <tr><th>Event or exposure</th><td>Roadway collision with other vehicle(s), moving in opposite directions, oncoming</td></tr>
-      <tr><th>OIICS event code</th><td>2613</td></tr>
-      <tr><th>Parent category</th><td>Transportation incidents (2) &rarr; Roadway incidents (26) &rarr; Collision with other vehicle(s) (261)</td></tr>
-    </table>
-    <p><em>Rationale:</em> Coded to the most specific level the record supports; the oncoming-direction detail selects subcode 2613.</p>
-    <p class="src">Code and category: BLS CFOI 2024, Table A-9. <a href="https://www.bls.gov/iif/fatal-injuries-tables/fatal-occupational-injuries-table-a-9-2024.htm">Table A-9, 2024</a></p>
-  </div>
-</section>
-
-<section id="analysis">
+<!-- DATA ANALYSIS -->
+<div class="section" id="analysis">
+  <div class="section-label">National Trends</div>
   <h2>Data Analysis: Workplace Injury &amp; Illness, 2024</h2>
-  <p>Case-level coding rolls up into the national trends that safety programs rely on. The figures below are taken directly from the cited BLS and OSHA releases.</p>
+  <p>Case-level coding rolls up into the national trends that safety programs rely on. Every figure below is drawn directly from BLS and OSHA public releases.</p>
 
-  <div class="stat-grid">
-    <div class="stat"><div class="n">5,070</div><div class="l">Fatal work injuries, 2024 (down 4.0% from 5,283 in 2023)</div></div>
-    <div class="stat"><div class="n">2.5M</div><div class="l">Private-industry nonfatal injuries &amp; illnesses, 2024 (down 3.1%)</div></div>
-    <div class="stat"><div class="n">3.3</div><div class="l">Fatal injuries per 100,000 FTE workers, 2024</div></div>
+  <!-- CHART -->
+  <div class="chart-wrap">
+    <div class="chart-title">Fatal Work Injuries by Event or Exposure — 2024</div>
+    <div class="chart-sub">Source: BLS Census of Fatal Occupational Injuries, 2024 (released Feb 19, 2026), Table A-9 &nbsp;·&nbsp; n = 5,070 total fatalities</div>
+
+    <div class="ch-row">
+      <div class="ch-label">Transportation incidents</div>
+      <div class="ch-track">
+        <div class="ch-fill gold" data-w="100"></div>
+        <span class="ch-pct">38.2%</span>
+      </div>
+      <div class="ch-val">1,937</div>
+    </div>
+    <div class="ch-row">
+      <div class="ch-label">Falls, slips, trips</div>
+      <div class="ch-track">
+        <div class="ch-fill" data-w="43.6"></div>
+        <span class="ch-pct">16.6%</span>
+      </div>
+      <div class="ch-val">844</div>
+    </div>
+    <div class="ch-row">
+      <div class="ch-label">Contact incidents</div>
+      <div class="ch-track">
+        <div class="ch-fill" data-w="39.0"></div>
+        <span class="ch-pct">14.9%</span>
+      </div>
+      <div class="ch-val">756</div>
+    </div>
+    <div class="ch-row">
+      <div class="ch-label">Violent acts</div>
+      <div class="ch-track">
+        <div class="ch-fill" data-w="37.8"></div>
+        <span class="ch-pct">14.5%</span>
+      </div>
+      <div class="ch-val">733</div>
+    </div>
+    <div class="ch-row">
+      <div class="ch-label">Exposure to substances</div>
+      <div class="ch-track">
+        <div class="ch-fill" data-w="35.5"></div>
+        <span class="ch-pct">13.5%</span>
+      </div>
+      <div class="ch-val">687</div>
+    </div>
+    <div class="ch-row">
+      <div class="ch-label">Explosions &amp; fires</div>
+      <div class="ch-track">
+        <div class="ch-fill" data-w="4.8"></div>
+        <span class="ch-pct">1.8%</span>
+      </div>
+      <div class="ch-val">93</div>
+    </div>
   </div>
 
-  <h3>Fatal work injuries by event or exposure, 2024</h3>
-  <div class="bar"><span class="label">Transportation incidents</span><span class="track"><span class="fill" style="width:100%;"></span></span><span class="val">1,937</span></div>
-  <div class="bar"><span class="label">Falls, slips, trips</span><span class="track"><span class="fill" style="width:43.6%;"></span></span><span class="val">844</span></div>
-  <div class="bar"><span class="label">Contact incidents</span><span class="track"><span class="fill" style="width:39.0%;"></span></span><span class="val">756</span></div>
-  <div class="bar"><span class="label">Violent acts</span><span class="track"><span class="fill" style="width:37.8%;"></span></span><span class="val">733</span></div>
-  <div class="bar"><span class="label">Exposure to harmful substances</span><span class="track"><span class="fill" style="width:35.5%;"></span></span><span class="val">687</span></div>
-  <div class="bar"><span class="label">Explosions and fires</span><span class="track"><span class="fill" style="width:4.8%;"></span></span><span class="val">93</span></div>
-  <p class="src">Source: BLS Census of Fatal Occupational Injuries, 2024 (released Feb 19, 2026), Table A-9. <a href="https://www.bls.gov/news.release/cfoi.nr0.htm">bls.gov/news.release/cfoi.nr0.htm</a></p>
+  <h3 style="font-size:16px;color:var(--navy);margin:28px 0 10px;">Observations</h3>
+  <p>Transportation incidents were the most frequent fatal event in 2024, accounting for 38.2 percent of all occupational fatalities. The overall decline was driven largely by a 16.2 percent drop in deaths from exposure to harmful substances (687, down from 820), itself driven by fewer drug and alcohol overdoses (410, down from 512). On the nonfatal side, 2.5 million private-industry cases represent the lowest total in the series going back to 2003.</p>
+  <p class="src">BLS Survey of Occupational Injuries and Illnesses, 2024 (released Jan 22, 2026). <a href="https://www.bls.gov/iif/">bls.gov/iif</a></p>
 
-  <h3>Observations</h3>
-  <p>Transportation incidents were the most frequent fatal event in 2024, accounting for 38.2 percent of all occupational fatalities. The overall decline in fatalities was driven largely by a 16.2 percent drop in deaths from exposure to harmful substances or environments (to 687 from 820), itself driven by fewer drug and alcohol overdoses (410, down from 512). On the nonfatal side, 2.5 million private-industry cases were the lowest in the series going back to 2003, with the total recordable case rate at 2.3 per 100 FTE workers.</p>
-  <p class="src">Source: BLS SOII 2024 (released Jan 22, 2026). <a href="https://www.bls.gov/iif/">bls.gov/iif</a></p>
+  <h3 style="font-size:16px;color:var(--navy);margin:28px 0 14px;">Top OSHA Severe Injury Events, 2015–2025</h3>
+  <div class="osha-grid">
+    <div class="osha-card">
+      <div class="osha-n">6,685</div>
+      <div class="osha-event">Caught in running equipment / machinery — regular operation</div>
+      <div class="osha-rank">#1 most reported</div>
+    </div>
+    <div class="osha-card">
+      <div class="osha-n">5,913</div>
+      <div class="osha-event">Other fall to lower level</div>
+      <div class="osha-rank">#2 most reported</div>
+    </div>
+    <div class="osha-card">
+      <div class="osha-n">5,269</div>
+      <div class="osha-event">Caught in running equipment — maintenance / cleaning</div>
+      <div class="osha-rank">#3 most reported</div>
+    </div>
+  </div>
+  <p class="src">OSHA Severe Injury Reports dashboard, data 1/1/2015–9/30/2025 (104,585 total reports). <a href="https://www.osha.gov/severe-injury-reports">osha.gov/severe-injury-reports</a></p>
+</div>
 
-  <h3>Severe injuries reported to federal OSHA</h3>
-  <p>OSHA's Severe Injury Reports program (employer-reported amputations, hospitalizations, and losses of an eye under 29 CFR 1904.39) recorded 104,585 total reports from January 2015 through September 2025. The most frequent coded event was caught in running equipment or machinery during regular operation (6,685), followed by other fall to lower level (5,913) and caught in running equipment during maintenance/cleaning (5,269), reinforcing the machinery and fall hazards seen in the fatal data.</p>
-  <p class="src">Source: OSHA Severe Injury Dashboard (data 1/1/2015–9/30/2025). <a href="https://www.osha.gov/severe-injury-reports">osha.gov/severe-injury-reports</a></p>
-</section>
-
-<section id="approach">
+<!-- APPROACH -->
+<div class="section" id="approach">
+  <div class="section-label">Quality Practice</div>
   <h2>Approach to Ambiguity &amp; Quality</h2>
   <p>Accurate classification depends on consistent judgment when a record is incomplete. My practice is to code what the record clearly supports, code to the most specific level the evidence allows, document any assumption I make, and flag open questions for a senior analyst rather than guess silently. This keeps the dataset consistent and keeps uncertainty visible.</p>
-  <div class="card">
-    <h3>Example: choosing specificity</h3>
-    <p>OIICS codes are hierarchical. A roadway collision can be coded broadly (Transportation incidents, 2) or specifically (oncoming collision, 2613). When a narrative does not state direction, I code to the parent level the record supports (261) and note what additional detail would be needed to assign the subcode, rather than assuming it. Coding only what the evidence supports protects the integrity of the trend data those codes feed.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>Example: choosing specificity</h3>
+      <p style="font-size:14px;">OIICS codes are hierarchical. A roadway collision can be coded broadly (Transportation incidents, 2) or specifically (oncoming collision, 2613). When a narrative does not state direction, I code to the parent level the record supports (261) and note what additional detail would be needed to assign the subcode — rather than assuming it. Coding only what the evidence supports protects the integrity of the trend data those codes feed.</p>
+    </div>
   </div>
-  <p>On process improvement: documenting coding decisions as I go makes patterns easy to review, supports consistency across a team, and creates a record that helps refine guidance over time.</p>
-</section>
+  <p style="margin-top:20px;">On process improvement: documenting coding decisions as I go makes patterns easy to review, supports consistency across a team, and creates a record that helps refine guidance over time.</p>
+</div>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Tabasum Hamdard, Harrisonburg, VA</p>
-  <p><a href="mailto:tabassum.hamdard11@gmail.com">tabassum.hamdard11@gmail.com</a> &nbsp;·&nbsp; <a href="https://github.com/thamdard27">github.com/thamdard27</a></p>
-</section>
+<!-- CONTACT -->
+<div class="contact-band" id="contact">
+  <h2>Get in Touch</h2>
+  <p>Tabasum Hamdard · Harrisonburg, VA · Available for remote work</p>
+  <div class="contact-actions">
+    <a href="mailto:tabassum.hamdard11@gmail.com" class="btn btn-primary">tabassum.hamdard11@gmail.com</a>
+    <a href="https://github.com/thamdard27" class="btn btn-ghost" target="_blank">github.com/thamdard27</a>
+  </div>
+</div>
 
 <footer>
-  Sources: U.S. Bureau of Labor Statistics, Census of Fatal Occupational Injuries (2024) and Survey of Occupational Injuries and Illnesses (2024); U.S. OSHA Severe Injury Reports (2015–2025); BLS OIICS v3.0 manual. This portfolio presents self-directed analysis using publicly available data and the public OIICS manual. It is not affiliated with or endorsed by BLS, OSHA, or ERG.
+  Sources: U.S. Bureau of Labor Statistics, Census of Fatal Occupational Injuries (2024) and Survey of Occupational Injuries and Illnesses (2024); U.S. OSHA Severe Injury Reports (2015–2025); BLS OIICS v3.0 manual. This portfolio presents self-directed analysis using publicly available data. Not affiliated with or endorsed by BLS, OSHA, or ERG.
 </footer>
+
+<script>
+  // Animate bars on scroll
+  const fills = document.querySelectorAll('.ch-fill');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        el.style.width = el.dataset.w + '%';
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+  fills.forEach(f => observer.observe(f));
+</script>
 
 </body>
 </html>

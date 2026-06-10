@@ -6,19 +6,19 @@
 <title>Tabasum Hamdard — Occupational Safety & Health Data Analysis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Sans:wght@600;700&display=swap" rel="stylesheet">
 <style>
 /* ── Tokens ─────────────────────────────────────────── */
 :root {
-  --navy:   #0D1F35;
-  --navy2:  #132840;
-  --teal:   #1A7F8E;
-  --teal2:  #22A2B4;
-  --gold:   #E8A84C;
-  --ink:    #1A1A2E;
-  --mid:    #4A5568;
-  --soft:   #F7F9FC;
-  --line:   #E2E8F0;
+  --navy:   #1A3C2E;
+  --navy2:  #122B20;
+  --teal:   #2E6B4F;
+  --teal2:  #3D8F68;
+  --gold:   #5AAF82;
+  --ink:    #1A2E24;
+  --mid:    #4A5E54;
+  --soft:   #F4F7F5;
+  --line:   #DDE6E1;
   --white:  #FFFFFF;
   --r:      10px;
 }
@@ -35,7 +35,7 @@ body {
 /* ── Nav ────────────────────────────────────────────── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(13,31,53,.97);
+  background: rgba(26,60,46,.97);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255,255,255,.07);
 }
@@ -45,8 +45,8 @@ nav {
   padding: 0 32px; height: 58px;
 }
 .nav-name {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: 15px; color: var(--white); letter-spacing: .4px;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: 15px; color: var(--white); letter-spacing: .2px;
 }
 .nav-name span { color: var(--teal2); }
 .nav-links { display: flex; gap: 6px; }
@@ -60,27 +60,27 @@ nav {
 
 /* ── Hero ───────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, var(--navy) 0%, #0A2E44 60%, #0D3348 100%);
+  background: linear-gradient(135deg, #1A3C2E 0%, #122B20 60%, #0F2419 100%);
   padding: 90px 32px 80px;
   position: relative; overflow: hidden;
 }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(26,127,142,.18) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(61,143,104,.18) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero-inner { max-width: 800px; margin: 0 auto; position: relative; }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(26,127,142,.2); border: 1px solid rgba(34,162,180,.3);
-  color: var(--teal2); font-size: 11px; font-weight: 600;
+  background: rgba(61,143,104,.2); border: 1px solid rgba(61,143,104,.35);
+  color: #7ECBA1; font-size: 11px; font-weight: 600;
   letter-spacing: 1.2px; text-transform: uppercase;
   padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
 }
 .hero-eyebrow::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--teal2);
+  background: #7ECBA1;
   animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {
@@ -88,12 +88,12 @@ nav {
   50% { opacity:.4; transform:scale(.7); }
 }
 .hero h1 {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: clamp(30px, 5vw, 52px);
-  color: var(--white); line-height: 1.1;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: clamp(28px, 4.5vw, 48px);
+  color: var(--white); line-height: 1.15;
   margin-bottom: 20px;
 }
-.hero h1 em { color: var(--teal2); font-style: normal; }
+.hero h1 em { color: #7ECBA1; font-style: normal; }
 .hero-sub {
   font-size: 17px; color: rgba(255,255,255,.65);
   max-width: 620px; margin-bottom: 32px; line-height: 1.65;
@@ -132,7 +132,7 @@ nav {
 }
 .kpi:last-child { border-right: none; }
 .kpi-n {
-  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
   font-size: 36px; color: var(--teal2); line-height: 1;
 }
 .kpi-label { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 6px; line-height: 1.45; }
@@ -156,8 +156,8 @@ nav {
   margin-bottom: 10px;
 }
 .section h2 {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: 26px; color: var(--navy); margin-bottom: 18px;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: 24px; color: var(--navy); margin-bottom: 18px;
 }
 p { margin-bottom: 16px; color: var(--mid); font-size: 15px; }
 p:last-child { margin-bottom: 0; }
@@ -170,7 +170,7 @@ p:last-child { margin-bottom: 0; }
   border-left: 4px solid var(--teal);
 }
 .card h3 {
-  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
   font-size: 15px; color: var(--navy); margin-bottom: 14px;
 }
 table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
@@ -200,7 +200,7 @@ td { color: var(--mid); }
   margin: 28px 0;
 }
 .chart-title {
-  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
   font-size: 15px; color: var(--white); margin-bottom: 6px;
 }
 .chart-sub { font-size: 12px; color: rgba(255,255,255,.45); margin-bottom: 28px; }
@@ -239,7 +239,7 @@ td { color: var(--mid); }
   border-radius: var(--r); padding: 20px;
   display: flex; flex-direction: column; gap: 6px;
 }
-.osha-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--navy); }
+.osha-n { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 28px; color: var(--navy); }
 .osha-event { font-size: 13px; color: var(--mid); line-height: 1.4; }
 .osha-rank {
   font-size: 11px; font-weight: 700; letter-spacing: .8px;
@@ -268,8 +268,8 @@ td { color: var(--mid); }
   padding: 56px 32px; text-align: center;
 }
 .contact-band h2 {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: 26px; color: var(--white); margin-bottom: 12px;
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: 24px; color: var(--white); margin-bottom: 12px;
 }
 .contact-band p { color: rgba(255,255,255,.55); font-size: 15px; }
 .contact-band a { color: var(--teal2); text-decoration: none; }
@@ -385,22 +385,22 @@ footer {
   <p>OIICS version 3.0 classifies each case across four structures. My process is to read the record fully, identify the injuring event before the outcome, code each structure in order, and document the rationale so the result is consistent and reviewable.</p>
   <div class="method-grid">
     <div class="method-item">
-      <div class="method-icon"></div>
+      <div class="method-icon">🩹</div>
       <h4>Nature</h4>
       <p>The physical characteristic of the injury or illness — for example, fracture, amputation, or burn.</p>
     </div>
     <div class="method-item">
-      <div class="method-icon"></div>
+      <div class="method-icon">🦴</div>
       <h4>Part of Body</h4>
       <p>The specific body part directly affected by the injury or illness.</p>
     </div>
     <div class="method-item">
-      <div class="method-icon"></div>
+      <div class="method-icon">⚡</div>
       <h4>Event or Exposure</h4>
       <p>The manner in which the injury or illness was produced — the primary axis of OIICS analysis.</p>
     </div>
     <div class="method-item">
-      <div class="method-icon"></div>
+      <div class="method-icon">🔧</div>
       <h4>Source &amp; Secondary Source</h4>
       <p>The object, substance, or condition that directly produced or contributed to the injury.</p>
     </div>
